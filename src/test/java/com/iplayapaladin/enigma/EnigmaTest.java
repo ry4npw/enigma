@@ -151,12 +151,12 @@ public class EnigmaTest {
 	}
 
 	/**
-	 * Write in the plug board settings for these 10 pairs:
+	 * Add plug board settings for these 10 pairs:
 	 * 
 	 * AP BR CM FZ GJ IL NT OV QS WX
 	 * 
-	 * Using rotors I, II and III with ring settings 10, 14 and 21 from our
-	 * previous example and message key V Q Q decipher the following:
+	 * Using rotors I, II and III with ring settings 10, 14 and 21 and message
+	 * key V Q Q to decipher the following:
 	 * 
 	 * H A B H V H L Y D F N A D Z Y
 	 * 

@@ -19,65 +19,77 @@ public class RotorWiring {
 		// empty method
 	}
 
+	public static final Character[] ALPHABET = EnigmaUtils
+			.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
 	public static Reflector<Character> reflectorWideB() {
 		return new ReflectorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-				EnigmaUtils.toCharacterArray("YRUHQSLDPXNGOKMIEBFZCWVJAT"));
+				ALPHABET,
+				EnigmaUtils.toCharacterArray("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
+				ALPHABET);
 	}
 
 	public static Rotor<Character> rotorI() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("EKMFLGDQVZNTOWYHXUSPAIBRCJ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("Q"));
 	}
 
 	public static Rotor<Character> rotorII() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("AJDKSIRUXBLHWTMCQGZNPYFVOE"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("E"));
 	}
 
 	public static Rotor<Character> rotorIII() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("BDFHJLCPRTXVZNYEIWGAKMUSQO"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("V"));
 	}
 
 	public static Rotor<Character> rotorIV() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("ESOVPZJAYQUIRHXLNFTGKDCMWB"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("J"));
 	}
 
 	public static Rotor<Character> rotorV() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("VZBRGITYUPSDNHLXAWMJQOFECK"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("Z"));
 	}
 
 	public static Rotor<Character> rotorVI() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("JPGVOUMFYQBENHZRDKASXLICTW"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("ZM"));
 	}
 
 	public static Rotor<Character> rotorVII() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("NZJHGRCXMYSWBOUFAIVLPEKQDT"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("ZM"));
 	}
 
 	public static Rotor<Character> rotorVIII() {
 		return new RotorImpl<>(
-				EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("FKQHTLXOCBJSPDZRAMEWNIUYGV"),
+				ALPHABET,
 				EnigmaUtils.toCharacterArray("ZM"));
 	}
 }

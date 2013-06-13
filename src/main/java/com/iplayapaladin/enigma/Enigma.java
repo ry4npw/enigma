@@ -9,8 +9,9 @@ import com.google.common.collect.ObjectArrays;
 
 /**
  * This class is a representation of an Enigma machine. You must add
- * <em>at least</em> one {@link Rotor} and one {@link Reflector} before using
- * this class.
+ * <em>at least</em> one {@link Rotor} and set the {@link Reflector} before
+ * using calling {@link #keyPress(T)} or {@link #encrypt(T[])}. Plug board
+ * settings are optional.
  * 
  * @author Ryan Powell
  * 
@@ -57,14 +58,30 @@ public class Enigma<T> {
 	 * @return the lamp lit after tracing the electrical path
 	 */
 	public T keyPress(T input) {
+		Validate.notNull(input);
+		Validate.notEmpty(rotorSequence);
 		Validate.notNull(reflector);
 
+		return keyPressHelper(input);
+	}
+
+	/**
+	 * <p>
+	 * Performs the logic for a key press.
+	 * <p>
+	 * <p>
+	 * This method separates the key press logic from the validation to prevent
+	 * validation for every call by {@link #encrypt(T[])}.
+	 * </p>
+	 * 
+	 * @param input
+	 * @return the lamp to be lit
+	 */
+	protected T keyPressHelper(T input) {
 		step();
 
-		T result = input;
-
 		// pass through plug board
-		result = plugboard.encode(result);
+		T result = plugboard.encode(input);
 
 		// step through rotors right-to-left
 		for (int i = 0; i < rotorSequence.size(); i++) {
@@ -93,10 +110,14 @@ public class Enigma<T> {
 	 * @return an array of the same length, containing the encrypted source.
 	 */
 	public T[] encrypt(T[] input) {
+		Validate.notEmpty(input);
+		Validate.notEmpty(rotorSequence);
+		Validate.notNull(reflector);
+
 		T[] encrypted = ObjectArrays.newArray(input, input.length);
 
 		for (int i = 0; i < input.length; i++) {
-			encrypted[i] = keyPress(input[i]);
+			encrypted[i] = keyPressHelper(input[i]);
 		}
 
 		return encrypted;

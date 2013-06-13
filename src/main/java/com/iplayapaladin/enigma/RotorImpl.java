@@ -7,9 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
 /**
  * Implementation of the {@link Rotor} interface. Due to autoboxing, performance
  * of this implementation may be "poor".
@@ -20,37 +17,42 @@ import com.google.common.collect.HashBiMap;
  *            The class of the Rotor mappings. For the purpose of Enigma, this
  *            will most likely be {@link Character}'s.
  */
-public class RotorImpl<T> implements Rotor<T> {
-	protected BiMap<T, T> wiring;
+public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
 	protected List<T> inputs;
 	protected List<T> outputs;
 	protected Set<T> notches = new HashSet<>();
-	protected int offset = 0;
+
+	/**
+	 * Ringstellung (or ring setting) is the offset of the wiring relative to
+	 * the positions.
+	 */
 	protected int ringstellung = 0;
 
 	/**
-	 * Parameterized constructor
+	 * Parameterized constructor.
 	 * 
 	 * @param inputs
+	 *            the array of input contacts on the rotor, in order
 	 * @param outputs
+	 *            the array of output contacts on the rotor, ordered to map to
+	 *            the corresponding input. for example, if A mapped to F and A
+	 *            was the first element in {@code inputs}, the F should be the
+	 *            first element in {@code outputs}.
+	 * @param positions
+	 *            the array of positions marked on the rotor
 	 * @param notches
+	 *            the array of positions at which the rotor is notched, and
+	 *            should turn the adjacent rotor
 	 */
-	public RotorImpl(T[] inputs, T[] outputs, T[] notches) {
-		Validate.notNull(inputs);
-		Validate.notNull(outputs);
-		Validate.notEmpty(inputs);
-		Validate.isTrue(inputs.length == outputs.length);
+	public RotorImpl(T[] inputs, T[] outputs, T[] positions, T[] notches) {
+		super(inputs, outputs, positions);
 
 		this.inputs = Arrays.asList(inputs);
 		this.outputs = Arrays.asList(outputs);
 
-		wiring = HashBiMap.create(inputs.length);
-
-		for (int i = 0; i < inputs.length; i++) {
-			wiring.put(inputs[i], outputs[i]);
-		}
-
 		for (int j = 0; j < notches.length; j++) {
+			Validate.notNull(notches[j]);
+			Validate.isTrue(this.positions.contains(notches[j]));
 			this.notches.add(notches[j]);
 		}
 	}
@@ -62,6 +64,14 @@ public class RotorImpl<T> implements Rotor<T> {
 		return result;
 	}
 
+	/**
+	 * Shifts the input value based on the rotation of the rotor. To determine
+	 * the position of the wiring, we need to "shift" the input by the offset
+	 * and ringstellung.
+	 * 
+	 * @param value
+	 * @return the shifted input value
+	 */
 	private T shift(T value) {
 		int shiftedValue = (inputs.indexOf(value) + (offset - ringstellung))
 				% inputs.size();
@@ -71,6 +81,12 @@ public class RotorImpl<T> implements Rotor<T> {
 		return inputs.get(shiftedValue);
 	}
 
+	/**
+	 * Performs the inverse of {@link #shift(T)}.
+	 * 
+	 * @param value
+	 * @return the unshifted input value
+	 */
 	private T unshift(T value) {
 		int unshiftedValue = (inputs.indexOf(value) - (offset - ringstellung))
 				% inputs.size();
@@ -89,36 +105,28 @@ public class RotorImpl<T> implements Rotor<T> {
 
 	@Override
 	public Rotor<T> setRingstellung(T ringstellung) {
-		// TODO inputs = positions? positions should be separate from inputs
-		this.ringstellung = inputs.indexOf(ringstellung);
+		this.ringstellung = positions.indexOf(ringstellung);
 		return this;
 	}
 
 	@Override
 	public Rotor<T> setPosition(T position) {
-		// TODO inputs = positions
-		this.offset = inputs.indexOf(position) + ringstellung;
+		this.offset = positions.indexOf(position) + ringstellung;
 		return this;
 	}
 
 	@Override
 	public T currentPosition() {
-		// TODO inputs = positions
-		return inputs.get(offset);
+		return positions.get(offset);
 	}
 
 	@Override
 	public void rotate() {
-		// TODO inputs = positions
-		offset = (offset + 1) % inputs.size();
+		offset = (offset + 1) % positions.size();
 	}
 
 	@Override
 	public boolean atNotch() {
 		return notches.contains(currentPosition());
-	}
-
-	public int getOffset() {
-		return offset;
 	}
 }
