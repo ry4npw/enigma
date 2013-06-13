@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.Validate;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ObjectArrays;
 
 /**
@@ -21,7 +19,7 @@ import com.google.common.collect.ObjectArrays;
 public class Enigma<T> {
 	protected List<Rotor<T>> rotorSequence = new ArrayList<>();
 	protected Reflector<T> reflector = null;
-	protected BiMap<T, T> plugboard = HashBiMap.create(13);
+	protected PlugBoard<T> plugboard = new PlugBoardImpl<>();
 
 	/**
 	 * Add a rotor to the machine. <strong>NOTE:</strong> Rotors are added
@@ -40,7 +38,7 @@ public class Enigma<T> {
 	 * @param two
 	 */
 	public void addPlugBoardPair(T one, T two) {
-		plugboard.put(one, two);
+		plugboard.addPair(one, two);
 	}
 
 	/**
@@ -66,7 +64,7 @@ public class Enigma<T> {
 		T result = input;
 
 		// pass through plug board
-		result = passThroughPlugBoard(result);
+		result = plugboard.encode(result);
 
 		// step through rotors right-to-left
 		for (int i = 0; i < rotorSequence.size(); i++) {
@@ -82,18 +80,9 @@ public class Enigma<T> {
 		}
 
 		// pass back through plug board
-		result = passThroughPlugBoard(result);
+		result = plugboard.encode(result);
 
 		return result;
-	}
-
-	protected T passThroughPlugBoard(T input) {
-		if (plugboard.containsKey(input)) {
-			return plugboard.get(input);
-		} else if (plugboard.containsValue(input)) {
-			return plugboard.inverse().get(input);
-		}
-		return input;
 	}
 
 	/**
