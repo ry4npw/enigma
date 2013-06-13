@@ -1,11 +1,12 @@
 package com.iplayapaladin.enigma;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.iplayapaladin.enigma.util.EnigmaUtils;
 import com.iplayapaladin.enigma.util.RotorWiring;
 
 public class EnigmaTest {
@@ -144,22 +145,13 @@ public class EnigmaTest {
 				.setRingstellung('J'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
-		assertEquals("GOODRESULT", encrypt("QKTPEBZIUK"));
-	}
-
-	protected String encrypt(String input) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < input.length(); i++) {
-			sb.append(machine.keyPress(input.charAt(i)));
-			System.out.println(getPositions());
-		}
-
-		return sb.toString();
+		assertArrayEquals(new Character[] { 'G', 'O', 'O', 'D', 'R', 'E', 'S',
+				'U', 'L', 'T' },
+				machine.encrypt(EnigmaUtils.toCharacterArray("QKTPEBZIUK")));
 	}
 
 	/**
-	 * To try this out, write in the plug board settings for these 10 pairs:
+	 * Write in the plug board settings for these 10 pairs:
 	 * 
 	 * AP BR CM FZ GJ IL NT OV QS WX
 	 * 
@@ -180,8 +172,21 @@ public class EnigmaTest {
 		machine.addRotor(RotorWiring.rotorI().setPosition('V')
 				.setRingstellung('J'));
 		machine.setReflector(RotorWiring.reflectorWideB());
+		machine.addPlugBoardPair('A', 'P');
+		machine.addPlugBoardPair('B', 'R');
+		machine.addPlugBoardPair('C', 'M');
+		machine.addPlugBoardPair('F', 'Z');
+		machine.addPlugBoardPair('G', 'J');
+		machine.addPlugBoardPair('I', 'L');
+		machine.addPlugBoardPair('N', 'T');
+		machine.addPlugBoardPair('O', 'V');
+		machine.addPlugBoardPair('Q', 'S');
+		machine.addPlugBoardPair('W', 'X');
 
-		System.out.println(encrypt("HABHVHLYDFNADZY"));
+		assertArrayEquals(
+				new Character[] { 'T', 'H', 'A', 'T', 'S', 'I', 'T', 'W', 'E',
+						'L', 'L', 'D', 'O', 'N', 'E' },
+				machine.encrypt(EnigmaUtils.toCharacterArray("HABHVHLYDFNADZY")));
 		assertEquals("VRF", getPositions());
 	}
 }

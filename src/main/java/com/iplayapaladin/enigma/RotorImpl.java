@@ -89,15 +89,14 @@ public class RotorImpl<T> implements Rotor<T> {
 
 	@Override
 	public Rotor<T> setRingstellung(T ringstellung) {
-		// TODO inputs = positions
+		// TODO inputs = positions? positions should be separate from inputs
 		this.ringstellung = inputs.indexOf(ringstellung);
 		return this;
 	}
 
 	@Override
 	public Rotor<T> setPosition(T position) {
-		// TODO inputs = positions, positions should be a completely separate
-		// set from inputs
+		// TODO inputs = positions
 		this.offset = inputs.indexOf(position) + ringstellung;
 		return this;
 	}

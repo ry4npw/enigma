@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.Validate;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ObjectArrays;
+
 /**
  * This class is a representation of an Enigma machine. You must add
  * <em>at least</em> one {@link Rotor} and one {@link Reflector} before using
@@ -17,6 +21,7 @@ import org.apache.commons.lang3.Validate;
 public class Enigma<T> {
 	protected List<Rotor<T>> rotorSequence = new ArrayList<>();
 	protected Reflector<T> reflector = null;
+	protected BiMap<T, T> plugboard = HashBiMap.create(13);
 
 	/**
 	 * Add a rotor to the machine. <strong>NOTE:</strong> Rotors are added
@@ -28,6 +33,21 @@ public class Enigma<T> {
 		rotorSequence.add(rotor);
 	}
 
+	/**
+	 * Add a cable connecting a pair of items to the plug board.
+	 * 
+	 * @param one
+	 * @param two
+	 */
+	public void addPlugBoardPair(T one, T two) {
+		plugboard.put(one, two);
+	}
+
+	/**
+	 * Adds a reflector to the machine.
+	 * 
+	 * @param reflector
+	 */
 	public void setReflector(Reflector<T> reflector) {
 		this.reflector = reflector;
 	}
@@ -45,7 +65,8 @@ public class Enigma<T> {
 
 		T result = input;
 
-		// TODO plug board
+		// pass through plug board
+		result = passThroughPlugBoard(result);
 
 		// step through rotors right-to-left
 		for (int i = 0; i < rotorSequence.size(); i++) {
@@ -60,9 +81,36 @@ public class Enigma<T> {
 			result = rotorSequence.get(j).encodeInverse(result);
 		}
 
-		// TODO plug board
+		// pass back through plug board
+		result = passThroughPlugBoard(result);
 
 		return result;
+	}
+
+	protected T passThroughPlugBoard(T input) {
+		if (plugboard.containsKey(input)) {
+			return plugboard.get(input);
+		} else if (plugboard.containsValue(input)) {
+			return plugboard.inverse().get(input);
+		}
+		return input;
+	}
+
+	/**
+	 * Performs encryption of a source array.
+	 * 
+	 * @param input
+	 *            the source array
+	 * @return an array of the same length, containing the encrypted source.
+	 */
+	public T[] encrypt(T[] input) {
+		T[] encrypted = ObjectArrays.newArray(input, input.length);
+
+		for (int i = 0; i < input.length; i++) {
+			encrypted[i] = keyPress(input[i]);
+		}
+
+		return encrypted;
 	}
 
 	/**
