@@ -11,6 +11,7 @@ public interface Rotor<T> extends Reflector<T> {
 	 * Set the internal wiring of the rotor relative to the rotor.
 	 * 
 	 * @param ringstellung
+	 * @return this {@link Rotor<T>} object for in-lining of this method
 	 */
 	Rotor<T> setRingstellung(T ringstellung);
 

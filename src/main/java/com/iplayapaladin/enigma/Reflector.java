@@ -11,6 +11,7 @@ public interface Reflector<T> {
 	 * Set the current position of the ring.
 	 * 
 	 * @param position
+	 * @return this {@link Reflector<T>} object for in-lining of this method
 	 */
 	Reflector<T> setPosition(T position);
 }
