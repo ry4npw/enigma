@@ -8,7 +8,7 @@ import org.junit.Test;
 import pw.ry4n.enigma.util.EnigmaUtils;
 import pw.ry4n.enigma.util.RotorWiring;
 
-public class EnigmaTest {
+public class EnigmaCharacterTest {
 	@Test
 	public void testThreeRotorStep() {
 		Enigma<Character> machine = new Enigma<>();
@@ -122,10 +122,10 @@ public class EnigmaTest {
 	}
 
 	/**
-	 * Using rotors I, II and III as before, place the ring settings at 10, 14 and
-	 * 21. Then turn the rotors to set the message key to X Y Z (the letters showing
-	 * on the rings, not the letters underneath them) and decipher the following
-	 * message:
+	 * Using rotors I, II and III as before, place the ring settings at 10 ('J'), 14
+	 * ('N') and 21 ('U'). Then turn the rotors to set the message key to X Y Z (the
+	 * letters showing on the rings, not the letters underneath them) and decipher
+	 * the following message:
 	 * 
 	 * Q K T P E B Z I U K
 	 */

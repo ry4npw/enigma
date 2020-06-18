@@ -7,6 +7,9 @@ import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 /**
  * Implementation of the {@link Rotor} interface. Due to autoboxing, performance
  * of this implementation may be "poor".
@@ -16,7 +19,10 @@ import org.apache.commons.lang3.Validate;
  * @param <T> The class of the Rotor mappings. For the purpose of Enigma, this
  *            will most likely be {@link Character}'s.
  */
-public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
+public class RotorImpl<T> implements Rotor<T> {
+	protected BiMap<T, T> wiring;
+	protected List<T> positions;
+	protected int offset = 0;
 	protected List<T> inputs;
 	protected List<T> outputs;
 	protected Set<T> notches = new HashSet<>();
@@ -40,7 +46,21 @@ public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
 	 *                  should turn the adjacent rotor
 	 */
 	public RotorImpl(T[] inputs, T[] outputs, T[] positions, T[] notches) {
-		super(inputs, outputs, positions);
+		Validate.notEmpty(inputs);
+		Validate.notEmpty(outputs);
+		Validate.isTrue(inputs.length == outputs.length);
+		Validate.notEmpty(positions);
+		Validate.isTrue(inputs.length == positions.length);
+
+		this.positions = Arrays.asList(positions);
+
+		wiring = HashBiMap.create(inputs.length);
+
+		for (int i = 0; i < inputs.length; i++) {
+			Validate.notNull(inputs[i]);
+			Validate.notNull(outputs[i]);
+			wiring.put(inputs[i], outputs[i]);
+		}
 
 		this.inputs = Arrays.asList(inputs);
 		this.outputs = Arrays.asList(outputs);
