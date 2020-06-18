@@ -3,7 +3,6 @@ package pw.ry4n.enigma;
 import static org.assertj.core.api.Assertions.*;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
 import org.junit.Test;
 
 import pw.ry4n.enigma.util.EnigmaUtils;

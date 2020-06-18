@@ -2,7 +2,6 @@ package pw.ry4n.enigma;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import pw.ry4n.enigma.util.RotorWiring;
@@ -58,7 +57,7 @@ public class RotorTest {
 
 	@Test
 	public void testNotAtNotch() {
-			Rotor<Character> rotorI = RotorWiring.rotorI();
+		Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.rotate();
 		assertThat(rotorI.atNotch()).isFalse();
 	}
