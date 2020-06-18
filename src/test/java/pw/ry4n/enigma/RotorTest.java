@@ -1,6 +1,6 @@
 package pw.ry4n.enigma;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,46 +8,66 @@ import org.junit.Test;
 import pw.ry4n.enigma.util.RotorWiring;
 
 public class RotorTest {
-	private RotorImpl<Character> rotorI;
-
-	@Before
-	public void setUp() {
-		rotorI = (RotorImpl<Character>) RotorWiring.rotorI();
+	@Test
+	public void testRotorIAEncodesToE() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
+		assertThat(rotorI.encode('A')).isEqualTo('E');
+		assertThat(rotorI.encodeInverse('E')).isEqualTo('A');
 	}
 
 	@Test
-	public void testEncode() {
-		assertEquals('E', rotorI.encode('A').charValue());
-		assertEquals('A', rotorI.encodeInverse('E').charValue());
-		assertEquals('L', rotorI.encode('E').charValue());
-		assertEquals('E', rotorI.encodeInverse('L').charValue());
+	public void testRotorIEEncodesToL() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
+		assertThat(rotorI.encode('E')).isEqualTo('L');
+		assertThat(rotorI.encodeInverse('L')).isEqualTo('E');
 	}
 
 	@Test
-	public void testEncodeWithRotate() {
+	public void testRotorIAEncodesToJAfterFirstRotation() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.rotate();
-		assertEquals('J', rotorI.encode('A').charValue());
-		assertEquals('A', rotorI.encodeInverse('J').charValue());
+		assertThat(rotorI.encode('A')).isEqualTo('J');
+		assertThat(rotorI.encodeInverse('J')).isEqualTo('A');
+	}
+
+	@Test
+	public void testRotorIAEncodesToKAfterSecondRotation() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.rotate();
-		assertEquals('K', rotorI.encode('A').charValue());
-		assertEquals('A', rotorI.encodeInverse('K').charValue());
 		rotorI.rotate();
-		assertEquals('C', rotorI.encode('A').charValue());
-		assertEquals('A', rotorI.encodeInverse('C').charValue());
+		assertThat(rotorI.encode('A')).isEqualTo('K');
+		assertThat(rotorI.encodeInverse('K')).isEqualTo('A');
+	}
+
+	@Test
+	public void testRotorIAEncodesToCAfterThirdRotation() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
+		rotorI.rotate();
+		rotorI.rotate();
+		rotorI.rotate();
+		assertThat(rotorI.encode('A')).isEqualTo('C');
+		assertThat(rotorI.encodeInverse('C')).isEqualTo('A');
 	}
 
 	@Test
 	public void testAtNotch() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.setPosition('Q');
-		assertTrue(rotorI.atNotch());
+		assertThat(rotorI.atNotch()).isTrue();
+	}
+
+	@Test
+	public void testNotAtNotch() {
+			Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.rotate();
-		assertFalse(rotorI.atNotch());
+		assertThat(rotorI.atNotch()).isFalse();
 	}
 
 	@Test
 	public void testRingstellung() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
 		rotorI.setRingstellung('B');
-		assertEquals('K', rotorI.encode('A').charValue());
-		assertEquals('A', rotorI.encodeInverse('K').charValue());
+		assertThat(rotorI.encode('A')).isEqualTo('K');
+		assertThat(rotorI.encodeInverse('K')).isEqualTo('A');
 	}
 }

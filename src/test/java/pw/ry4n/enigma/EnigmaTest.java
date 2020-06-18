@@ -1,6 +1,6 @@
 package pw.ry4n.enigma;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -10,75 +10,71 @@ import pw.ry4n.enigma.util.EnigmaUtils;
 import pw.ry4n.enigma.util.RotorWiring;
 
 public class EnigmaTest {
-	private Enigma<Character> machine;
-
-	@Before
-	public void setUp() {
-		machine = new Enigma<>();
-	}
-
 	@Test
 	public void testThreeRotorStep() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('U'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('A'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('A'));
 
-		assertEquals("AAU", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AAU");
 
 		machine.step();
-		assertEquals("AAV", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AAV");
 
 		machine.step();
-		assertEquals("ABW", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("ABW");
 
 		machine.step();
-		assertEquals("ABX", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("ABX");
 	}
 
 	@Test
 	public void testThreeRotorDoubleStep() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('U'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('D'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('A'));
 
-		assertEquals("ADU", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("ADU");
 
 		machine.step();
-		assertEquals("ADV", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("ADV");
 
 		machine.step();
-		assertEquals("AEW", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AEW");
 
 		machine.step();
-		assertEquals("BFX", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("BFX");
 
 		machine.step();
-		assertEquals("BFY", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("BFY");
 	}
 
 	@Test
 	public void testFourRotorDoubleStep() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('U'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('D'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('U'));
 		machine.addRotor(RotorWiring.rotorVIII().setPosition('A'));
 
-		assertEquals("AUDU", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AUDU");
 
 		machine.step();
-		assertEquals("AUDV", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AUDV");
 
 		machine.step();
-		assertEquals("AUEW", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AUEW");
 
 		machine.step();
-		assertEquals("AVFX", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AVFX");
 
 		machine.step();
-		assertEquals("AVFY", getPositions());
+		assertThat(getPositions(machine)).isEqualTo("AVFY");
 	}
 
-	protected String getPositions() {
+	protected String getPositions(Enigma<Character> machine) {
 		StringBuilder sb = new StringBuilder();
 		for (Rotor<Character> rotor : machine.rotorSequence) {
 			sb.append(rotor.currentPosition());
@@ -93,16 +89,17 @@ public class EnigmaTest {
 	 */
 	@Test
 	public void testKeyPress() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('A'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('A'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('A'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
-		assertEquals('B', machine.keyPress('A').charValue());
-		assertEquals('D', machine.keyPress('A').charValue());
-		assertEquals('Z', machine.keyPress('A').charValue());
-		assertEquals('G', machine.keyPress('A').charValue());
-		assertEquals('O', machine.keyPress('A').charValue());
+		assertThat(machine.keyPress('A')).isEqualTo('B');
+		assertThat(machine.keyPress('A')).isEqualTo('D');
+		assertThat(machine.keyPress('A')).isEqualTo('Z');
+		assertThat(machine.keyPress('A')).isEqualTo('G');
+		assertThat(machine.keyPress('A')).isEqualTo('O');
 	}
 
 	/**
@@ -112,16 +109,17 @@ public class EnigmaTest {
 	 */
 	@Test
 	public void testKeyPressWithRingstellung() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('A').setRingstellung('B'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('A').setRingstellung('B'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('A').setRingstellung('B'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
-		assertEquals('E', machine.keyPress('A').charValue());
-		assertEquals('W', machine.keyPress('A').charValue());
-		assertEquals('T', machine.keyPress('A').charValue());
-		assertEquals('Y', machine.keyPress('A').charValue());
-		assertEquals('X', machine.keyPress('A').charValue());
+		assertThat(machine.keyPress('A')).isEqualTo('E');
+		assertThat(machine.keyPress('A')).isEqualTo('W');
+		assertThat(machine.keyPress('A')).isEqualTo('T');
+		assertThat(machine.keyPress('A')).isEqualTo('Y');
+		assertThat(machine.keyPress('A')).isEqualTo('X');
 	}
 
 	/**
@@ -134,13 +132,14 @@ public class EnigmaTest {
 	 */
 	@Test
 	public void testEncrypt() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('Z').setRingstellung('U'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('Y').setRingstellung('N'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('X').setRingstellung('J'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
-		assertArrayEquals(new Character[] { 'G', 'O', 'O', 'D', 'R', 'E', 'S', 'U', 'L', 'T' },
-				machine.encrypt(EnigmaUtils.toCharacterArray("QKTPEBZIUK")));
+		assertThat(machine.encrypt(EnigmaUtils.toCharacterArray("QKTPEBZIUK")))
+				.isEqualTo(new Character[] { 'G', 'O', 'O', 'D', 'R', 'E', 'S', 'U', 'L', 'T' });
 	}
 
 	/**
@@ -158,6 +157,7 @@ public class EnigmaTest {
 	 */
 	@Test
 	public void testPlugBoard() {
+		Enigma<Character> machine = new Enigma<>();
 		machine.addRotor(RotorWiring.rotorIII().setPosition('Q').setRingstellung('U'));
 		machine.addRotor(RotorWiring.rotorII().setPosition('Q').setRingstellung('N'));
 		machine.addRotor(RotorWiring.rotorI().setPosition('V').setRingstellung('J'));
@@ -173,8 +173,8 @@ public class EnigmaTest {
 		machine.addPlugBoardPair('Q', 'S');
 		machine.addPlugBoardPair('W', 'X');
 
-		assertArrayEquals(new Character[] { 'T', 'H', 'A', 'T', 'S', 'I', 'T', 'W', 'E', 'L', 'L', 'D', 'O', 'N', 'E' },
-				machine.encrypt(EnigmaUtils.toCharacterArray("HABHVHLYDFNADZY")));
-		assertEquals("VRF", getPositions());
+		assertThat(machine.encrypt(EnigmaUtils.toCharacterArray("HABHVHLYDFNADZY"))).isEqualTo(
+				new Character[] { 'T', 'H', 'A', 'T', 'S', 'I', 'T', 'W', 'E', 'L', 'L', 'D', 'O', 'N', 'E' });
+		assertThat(getPositions(machine)).isEqualTo("VRF");
 	}
 }
