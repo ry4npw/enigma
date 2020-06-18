@@ -1,11 +1,11 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.iplayapaladin.enigma.util.RotorWiring;
+import pw.ry4n.enigma.util.RotorWiring;
 
 public class RotorTest {
 	private RotorImpl<Character> rotorI;

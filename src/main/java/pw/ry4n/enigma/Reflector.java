@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 public interface Reflector<T> {
 	/**

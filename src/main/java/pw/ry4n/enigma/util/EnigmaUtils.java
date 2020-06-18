@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma.util;
+package pw.ry4n.enigma.util;
 
 public class EnigmaUtils {
 	/**
@@ -22,7 +22,7 @@ public class EnigmaUtils {
 		Character[] array = new Character[s.length()];
 
 		for (int i = 0; i < s.length(); i++) {
-			array[i] = new Character(s.charAt(i));
+			array[i] = s.charAt(i);
 		}
 
 		return array;

@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.apache.commons.lang3.Validate;
 import com.google.common.collect.ObjectArrays;
 
 /**
- * This class is a representation of an Enigma machine. You must add
- * <em>at least</em> one {@link Rotor} and set the {@link Reflector} before
- * using calling {@link #keyPress(T)} or {@link #encrypt(T[])}. Plug board
- * settings are optional.
+ * This class is a representation of an Enigma machine. You must add <em>at
+ * least</em> one {@link Rotor} and set the {@link Reflector} before using
+ * calling {@link #keyPress(T)} or {@link #encrypt(T[])}. Plug board settings
+ * are optional.
  * 
  * @author Ryan Powell
  * 
@@ -105,8 +105,7 @@ public class Enigma<T> {
 	/**
 	 * Performs encryption of a source array.
 	 * 
-	 * @param input
-	 *            the source array
+	 * @param input the source array
 	 * @return an array of the same length, containing the encrypted source.
 	 */
 	public T[] encrypt(T[] input) {
@@ -134,14 +133,14 @@ public class Enigma<T> {
 
 	/**
 	 * <p>
-	 * Performs the action of one of three pawls (levers). The pawl will advance
-	 * the next rotor when aligned with the notch of previous rotor.
+	 * Performs the action of one of three pawls (levers). The pawl will advance the
+	 * next rotor when aligned with the notch of previous rotor.
 	 * </p>
 	 * <p>
-	 * The design also included a feature known as double-stepping. When the
-	 * third rotor is moved into its notched position, it will engage the both
-	 * the second and third rotors on the next movement. For an in-depth
-	 * explanation of double-stepping:
+	 * The design also included a feature known as double-stepping. When the third
+	 * rotor is moved into its notched position, it will engage the both the second
+	 * and third rotors on the next movement. For an in-depth explanation of
+	 * double-stepping:
 	 * <a>http://home.comcast.net/~dhhamer/downloads/rotors1.pdf</a>
 	 * </p>
 	 * <p>

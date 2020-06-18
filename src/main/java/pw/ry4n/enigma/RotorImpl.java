@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,8 +13,7 @@ import org.apache.commons.lang3.Validate;
  * 
  * @author Ryan Powell
  * 
- * @param <T>
- *            The class of the Rotor mappings. For the purpose of Enigma, this
+ * @param <T> The class of the Rotor mappings. For the purpose of Enigma, this
  *            will most likely be {@link Character}'s.
  */
 public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
@@ -23,26 +22,22 @@ public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
 	protected Set<T> notches = new HashSet<>();
 
 	/**
-	 * Ringstellung (or ring setting) is the offset of the wiring relative to
-	 * the positions.
+	 * Ringstellung (or ring setting) is the offset of the wiring relative to the
+	 * positions.
 	 */
 	protected int ringstellung = 0;
 
 	/**
 	 * Parameterized constructor.
 	 * 
-	 * @param inputs
-	 *            the array of input contacts on the rotor, in order
-	 * @param outputs
-	 *            the array of output contacts on the rotor, ordered to map to
-	 *            the corresponding input. for example, if A mapped to F and A
-	 *            was the first element in {@code inputs}, the F should be the
-	 *            first element in {@code outputs}.
-	 * @param positions
-	 *            the array of positions marked on the rotor
-	 * @param notches
-	 *            the array of positions at which the rotor is notched, and
-	 *            should turn the adjacent rotor
+	 * @param inputs    the array of input contacts on the rotor, in order
+	 * @param outputs   the array of output contacts on the rotor, ordered to map to
+	 *                  the corresponding input. for example, if A mapped to F and A
+	 *                  was the first element in {@code inputs}, the F should be the
+	 *                  first element in {@code outputs}.
+	 * @param positions the array of positions marked on the rotor
+	 * @param notches   the array of positions at which the rotor is notched, and
+	 *                  should turn the adjacent rotor
 	 */
 	public RotorImpl(T[] inputs, T[] outputs, T[] positions, T[] notches) {
 		super(inputs, outputs, positions);
@@ -65,16 +60,15 @@ public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
 	}
 
 	/**
-	 * Shifts the input value based on the rotation of the rotor. To determine
-	 * the position of the wiring, we need to "shift" the input by the offset
-	 * and ringstellung.
+	 * Shifts the input value based on the rotation of the rotor. To determine the
+	 * position of the wiring, we need to "shift" the input by the offset and
+	 * ringstellung.
 	 * 
 	 * @param value
 	 * @return the shifted input value
 	 */
 	private T shift(T value) {
-		int shiftedValue = (inputs.indexOf(value) + (offset - ringstellung))
-				% inputs.size();
+		int shiftedValue = (inputs.indexOf(value) + (offset - ringstellung)) % inputs.size();
 		while (shiftedValue < 0) {
 			shiftedValue += inputs.size();
 		}
@@ -88,8 +82,7 @@ public class RotorImpl<T> extends ReflectorImpl<T> implements Rotor<T> {
 	 * @return the unshifted input value
 	 */
 	private T unshift(T value) {
-		int unshiftedValue = (inputs.indexOf(value) - (offset - ringstellung))
-				% inputs.size();
+		int unshiftedValue = (inputs.indexOf(value) - (offset - ringstellung)) % inputs.size();
 		while (unshiftedValue < 0) {
 			unshiftedValue += inputs.size();
 		}

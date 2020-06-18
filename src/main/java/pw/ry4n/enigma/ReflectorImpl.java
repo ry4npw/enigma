@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,15 +20,12 @@ public class ReflectorImpl<T> implements Reflector<T> {
 	/**
 	 * Parameterized constructor.
 	 * 
-	 * @param inputs
-	 *            the array of input contacts on the reflector, in order
-	 * @param outputs
-	 *            the array of output contacts on the reflector, ordered to map
-	 *            to the corresponding input. for example, if A mapped to F and
-	 *            A was the first element in {@code inputs}, the F should be the
-	 *            first element in {@code outputs}.
-	 * @param positions
-	 *            the array of positions marked on the reflector
+	 * @param inputs    the array of input contacts on the reflector, in order
+	 * @param outputs   the array of output contacts on the reflector, ordered to
+	 *                  map to the corresponding input. for example, if A mapped to
+	 *                  F and A was the first element in {@code inputs}, the F
+	 *                  should be the first element in {@code outputs}.
+	 * @param positions the array of positions marked on the reflector
 	 */
 	public ReflectorImpl(T[] inputs, T[] outputs, T[] positions) {
 		Validate.notEmpty(inputs);

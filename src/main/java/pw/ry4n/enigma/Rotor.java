@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 public interface Rotor<T> extends Reflector<T> {
 	/**
@@ -29,11 +29,11 @@ public interface Rotor<T> extends Reflector<T> {
 	T currentPosition();
 
 	/**
-	 * This method must be called <em>AFTER</em> {@link #rotate()} has occurred
-	 * to return an accurate result.
+	 * This method must be called <em>AFTER</em> {@link #rotate()} has occurred to
+	 * return an accurate result.
 	 * 
-	 * @return {@code true} when this rotor is in the notched position and the
-	 *         next rotor in the sequence should be rotated.
+	 * @return {@code true} when this rotor is in the notched position and the next
+	 *         rotor in the sequence should be rotated.
 	 */
 	boolean atNotch();
 }

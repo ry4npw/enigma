@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

@@ -1,4 +1,4 @@
-package com.iplayapaladin.enigma;
+package pw.ry4n.enigma;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.iplayapaladin.enigma.util.EnigmaUtils;
-import com.iplayapaladin.enigma.util.RotorWiring;
+import pw.ry4n.enigma.util.EnigmaUtils;
+import pw.ry4n.enigma.util.RotorWiring;
 
 public class EnigmaTest {
 	private Enigma<Character> machine;
@@ -106,18 +106,15 @@ public class EnigmaTest {
 	}
 
 	/**
-	 * With the rotors I, II, III (from left to right), wide B-reflector, all
-	 * ring settings in B-position, and start position AAA, typing AAAAA will
-	 * produce the encoded sequence EWTYX.
+	 * With the rotors I, II, III (from left to right), wide B-reflector, all ring
+	 * settings in B-position, and start position AAA, typing AAAAA will produce the
+	 * encoded sequence EWTYX.
 	 */
 	@Test
 	public void testKeyPressWithRingstellung() {
-		machine.addRotor(RotorWiring.rotorIII().setPosition('A')
-				.setRingstellung('B'));
-		machine.addRotor(RotorWiring.rotorII().setPosition('A')
-				.setRingstellung('B'));
-		machine.addRotor(RotorWiring.rotorI().setPosition('A')
-				.setRingstellung('B'));
+		machine.addRotor(RotorWiring.rotorIII().setPosition('A').setRingstellung('B'));
+		machine.addRotor(RotorWiring.rotorII().setPosition('A').setRingstellung('B'));
+		machine.addRotor(RotorWiring.rotorI().setPosition('A').setRingstellung('B'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
 		assertEquals('E', machine.keyPress('A').charValue());
@@ -128,25 +125,21 @@ public class EnigmaTest {
 	}
 
 	/**
-	 * Using rotors I, II and III as before, place the ring settings at 10, 14
-	 * and 21. Then turn the rotors to set the message key to X Y Z (the letters
-	 * showing on the rings, not the letters underneath them) and decipher the
-	 * following message:
+	 * Using rotors I, II and III as before, place the ring settings at 10, 14 and
+	 * 21. Then turn the rotors to set the message key to X Y Z (the letters showing
+	 * on the rings, not the letters underneath them) and decipher the following
+	 * message:
 	 * 
 	 * Q K T P E B Z I U K
 	 */
 	@Test
 	public void testEncrypt() {
-		machine.addRotor(RotorWiring.rotorIII().setPosition('Z')
-				.setRingstellung('U'));
-		machine.addRotor(RotorWiring.rotorII().setPosition('Y')
-				.setRingstellung('N'));
-		machine.addRotor(RotorWiring.rotorI().setPosition('X')
-				.setRingstellung('J'));
+		machine.addRotor(RotorWiring.rotorIII().setPosition('Z').setRingstellung('U'));
+		machine.addRotor(RotorWiring.rotorII().setPosition('Y').setRingstellung('N'));
+		machine.addRotor(RotorWiring.rotorI().setPosition('X').setRingstellung('J'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 
-		assertArrayEquals(new Character[] { 'G', 'O', 'O', 'D', 'R', 'E', 'S',
-				'U', 'L', 'T' },
+		assertArrayEquals(new Character[] { 'G', 'O', 'O', 'D', 'R', 'E', 'S', 'U', 'L', 'T' },
 				machine.encrypt(EnigmaUtils.toCharacterArray("QKTPEBZIUK")));
 	}
 
@@ -155,8 +148,8 @@ public class EnigmaTest {
 	 * 
 	 * AP BR CM FZ GJ IL NT OV QS WX
 	 * 
-	 * Using rotors I, II and III with ring settings 10, 14 and 21 and message
-	 * key V Q Q to decipher the following:
+	 * Using rotors I, II and III with ring settings 10, 14 and 21 and message key V
+	 * Q Q to decipher the following:
 	 * 
 	 * H A B H V H L Y D F N A D Z Y
 	 * 
@@ -165,12 +158,9 @@ public class EnigmaTest {
 	 */
 	@Test
 	public void testPlugBoard() {
-		machine.addRotor(RotorWiring.rotorIII().setPosition('Q')
-				.setRingstellung('U'));
-		machine.addRotor(RotorWiring.rotorII().setPosition('Q')
-				.setRingstellung('N'));
-		machine.addRotor(RotorWiring.rotorI().setPosition('V')
-				.setRingstellung('J'));
+		machine.addRotor(RotorWiring.rotorIII().setPosition('Q').setRingstellung('U'));
+		machine.addRotor(RotorWiring.rotorII().setPosition('Q').setRingstellung('N'));
+		machine.addRotor(RotorWiring.rotorI().setPosition('V').setRingstellung('J'));
 		machine.setReflector(RotorWiring.reflectorWideB());
 		machine.addPlugBoardPair('A', 'P');
 		machine.addPlugBoardPair('B', 'R');
@@ -183,9 +173,7 @@ public class EnigmaTest {
 		machine.addPlugBoardPair('Q', 'S');
 		machine.addPlugBoardPair('W', 'X');
 
-		assertArrayEquals(
-				new Character[] { 'T', 'H', 'A', 'T', 'S', 'I', 'T', 'W', 'E',
-						'L', 'L', 'D', 'O', 'N', 'E' },
+		assertArrayEquals(new Character[] { 'T', 'H', 'A', 'T', 'S', 'I', 'T', 'W', 'E', 'L', 'L', 'D', 'O', 'N', 'E' },
 				machine.encrypt(EnigmaUtils.toCharacterArray("HABHVHLYDFNADZY")));
 		assertEquals("VRF", getPositions());
 	}
