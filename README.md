@@ -34,7 +34,7 @@ System.out.println(enigma.encrypt(EnigmaUtils.toCharacterArray("HELLOWORLD")));
 
 ## Using enigma to encrypt Base64
 
-It is possible to create your own reflector and rotor wiring with any set of Java objects.  As an example, I created a String-based rotors and reflector based on the Base64 character set.  See [`RotorWiringBase64.java`](src/main/java/pw/ry4n/enigma/util/RotorWiringBase64.java)].
+It is possible to create your own reflector and rotor wiring with any set of Java objects.  As an example, I created three String-based rotors and a reflector based on the Base64 character set.  See [`RotorWiringBase64.java`](src/main/java/pw/ry4n/enigma/util/RotorWiringBase64.java).
 
 ```java
 Enigma<String> enigma = new Enigma<>();
