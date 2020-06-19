@@ -15,16 +15,15 @@ import com.google.common.collect.HashBiMap;
  * 
  * @author Ryan Powell
  * 
- * @param <T> The class of the Rotor mappings. For the purpose of Enigma, this
- *            will most likely be {@link Character}'s.
+ * @param <T> The class of the Rotor mappings.
  */
 public class RotorImpl<T> implements Rotor<T> {
-	protected BiMap<T, T> wiring;
-	protected List<T> positions;
-	protected int offset = 0;
 	protected List<T> inputs;
-	protected List<T> outputs;
 	protected Set<T> notches = new HashSet<>();
+	protected int offset = 0;
+	protected List<T> outputs;
+	protected List<T> positions;
+	protected BiMap<T, T> wiring;
 
 	/**
 	 * Ringstellung (or ring setting) is the offset of the wiring relative to the
@@ -74,7 +73,6 @@ public class RotorImpl<T> implements Rotor<T> {
 	@Override
 	public T encode(T value) {
 		T result = unshift(wiring.get(shift(value)));
-		// System.out.println(value + " encoded to " + result);
 		return result;
 	}
 
@@ -111,7 +109,6 @@ public class RotorImpl<T> implements Rotor<T> {
 	@Override
 	public T encodeInverse(T value) {
 		T result = unshift(wiring.inverse().get(shift(value)));
-		// System.out.println(value + " inverse encoded to " + result);
 		return result;
 	}
 
@@ -123,7 +120,7 @@ public class RotorImpl<T> implements Rotor<T> {
 
 	@Override
 	public Rotor<T> setPosition(T position) {
-		this.offset = positions.indexOf(position) + ringstellung;
+		this.offset = positions.indexOf(position);
 		return this;
 	}
 

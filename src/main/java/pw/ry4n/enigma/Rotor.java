@@ -25,7 +25,7 @@ public interface Rotor<T> {
 	 * Set the current position of the ring.
 	 * 
 	 * @param position
-	 * @return this {@link Reflector<T>} object for in-lining of this method
+	 * @return this {@link Rotor<T>} object for in-lining of this method
 	 */
 	Rotor<T> setPosition(T position);
 

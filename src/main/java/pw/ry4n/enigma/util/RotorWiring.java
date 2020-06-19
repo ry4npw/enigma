@@ -74,7 +74,7 @@ public class RotorWiring {
 	}
 
 	private static Reflector<Character> reflector(String outputs) {
-		return new ReflectorImpl<>(ALPHABET, EnigmaUtils.stringToCharacterArray(outputs));
+		return new ReflectorImpl<>(ALPHABET, EnigmaUtils.stringToCharacterArray(outputs), ALPHABET);
 	}
 
 	private static Rotor<Character> rotor(String outputs, String notchPositions) {

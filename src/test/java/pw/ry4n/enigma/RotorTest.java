@@ -1,6 +1,6 @@
 package pw.ry4n.enigma;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -63,10 +63,37 @@ public class RotorTest {
 	}
 
 	@Test
+	public void testSetPositionIsEqualToRotate() {
+		Rotor<Character> positionedRotor = RotorWiring.rotorI();  // starts at A
+		Rotor<Character> rotatedRotor = RotorWiring.rotorI(); // starts at A
+
+		for (int i = 0; i < RotorWiring.ALPHABET.length; i++) {
+			positionedRotor.setPosition(RotorWiring.ALPHABET[i]); // set to position A, B, C...
+
+			// they should be the same
+			assertThat(positionedRotor.currentPosition()).isEqualTo(rotatedRotor.currentPosition());
+
+			rotatedRotor.rotate(); // now rotate to next position
+		}
+	}
+
+	@Test
 	public void testRingstellung() {
 		Rotor<Character> rotorI = RotorWiring.rotorI();
+
+		// with a ringstellung of B, pressing A will be like B was pressed.
 		rotorI.setRingstellung('B');
 		assertThat(rotorI.encode('A')).isEqualTo('K');
 		assertThat(rotorI.encodeInverse('K')).isEqualTo('A');
+	}
+
+	@Test
+	public void testPositionAndRingstellungOffset() {
+		Rotor<Character> rotorI = RotorWiring.rotorI();
+
+		rotorI.setPosition('D');
+		rotorI.setRingstellung('D');
+		assertThat(rotorI.encode('A')).isEqualTo('E');
+		assertThat(rotorI.encodeInverse('E')).isEqualTo('A');
 	}
 }

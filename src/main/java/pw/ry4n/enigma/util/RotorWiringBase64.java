@@ -27,7 +27,7 @@ public class RotorWiringBase64 {
 		// reflector must be wired in pairs
 		String[] outputs = EnigmaUtils
 				.stringToStringArray("h0cUtk8+qKJfeQn3N=r5DpbimxgWC9MLaAXoF1YOjVIS/E7v6Z42BlzPyTwuGdHsR");
-		return new ReflectorImpl<>(ALPHABET, outputs);
+		return new ReflectorImpl<>(ALPHABET, outputs, ALPHABET);
 	}
 
 	public static Rotor<String> rotorI() {

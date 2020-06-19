@@ -1,6 +1,6 @@
 package pw.ry4n.enigma;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -8,16 +8,7 @@ import org.junit.Test;
 import pw.ry4n.enigma.util.EnigmaUtils;
 import pw.ry4n.enigma.util.RotorWiring;
 
-public class EnigmaCharacterTest {
-	@Test
-	public void testReflectorsAreReflexive() {
-		RotorWiring.reflectorA();
-		RotorWiring.reflectorB();
-		RotorWiring.reflectorC();
-		RotorWiring.reflectorThinB();
-		RotorWiring.reflectorThinC();
-	}
-
+public class EnigmaTest {
 	@Test
 	public void testThreeRotorStep() {
 		Enigma<Character> machine = new Enigma<>();

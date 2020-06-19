@@ -1,6 +1,8 @@
 package pw.ry4n.enigma;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.Validate;
@@ -21,28 +23,33 @@ import org.apache.commons.lang3.Validate;
  * 
  * @author Ryan Powell
  *
- * @param <T> The class of the Rotor mappings. For the purpose of Enigma, this
- *            will most likely be {@link Character}'s.
+ * @param <T> The class of the Rotor mappings.
  */
 public class ReflectorImpl<T> implements Reflector<T> {
+	protected List<T> inputs;
+	protected int offset = 0;
+	protected List<T> positions;
 	protected Map<T, T> wiring;
 
 	/**
 	 * Parameterized constructor.
 	 * 
-	 * @param inputs  The array of input contacts on the reflector, in order
-	 * @param outputs The array of output contacts on the reflector. Because the
-	 *                reflector is wired in pairs, the outputs must be reflexive to
-	 *                the inputs. See {@link ReflectorImpl}.
+	 * @param inputs    The array of input contacts on the reflector, in order
+	 * @param outputs   The array of output contacts on the reflector. Because the
+	 *                  reflector is wired in pairs, the outputs must be reflexive
+	 *                  to the inputs. See {@link ReflectorImpl}.
+	 * @param positions the array of positions marked on the rotor
 	 *
 	 * @throws IllegalArgumentException when the inputs and outputs are not
 	 *                                  reflexive.
 	 */
-	public ReflectorImpl(T[] inputs, T[] outputs) {
+	public ReflectorImpl(T[] inputs, T[] outputs, T[] positions) {
 		Validate.notEmpty(inputs);
 		Validate.notEmpty(outputs);
 		Validate.isTrue(inputs.length == outputs.length);
 
+		this.inputs = Arrays.asList(inputs);
+		this.positions = Arrays.asList(positions);
 		wiring = new HashMap<>(inputs.length);
 
 		for (int i = 0; i < inputs.length; i++) {
@@ -65,7 +72,29 @@ public class ReflectorImpl<T> implements Reflector<T> {
 
 	@Override
 	public T encode(T value) {
-		T result = wiring.get(value);
+		T result = wiring.get(shift(value));
 		return result;
+	}
+
+	/**
+	 * Shifts the input value based on the rotation of the rotor. To determine the
+	 * position of the wiring, we need to "shift" the input by the offset and
+	 * ringstellung.
+	 * 
+	 * @param value
+	 * @return the shifted input value
+	 */
+	private T shift(T value) {
+		int shiftedValue = (inputs.indexOf(value) + offset) % inputs.size();
+		while (shiftedValue < 0) {
+			shiftedValue += inputs.size();
+		}
+		return inputs.get(shiftedValue);
+	}
+
+	@Override
+	public Reflector<T> setPosition(T position) {
+		this.offset = positions.indexOf(position);
+		return this;
 	}
 }
