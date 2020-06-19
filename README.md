@@ -4,7 +4,7 @@
 
 This project was an experiment to emulate the hardware of an Enigma machine.  Essentially, it is a state machine that holds the state of rotors, a reflector, and a plug board.  The implementation includes a [`RotorWiring`](src/main/java/pw/ry4n/enigma/util/RotorWiring.java) class with default implementations of the standard German Enigma rotors I through VIII and the wide B reflector.
 
-This java implementation is not optimized for performance.  It is, however, an accurate emulation of a physical Enigma machine and state.  The choice to base implementation on a class and not a primitive was done to support extension to other Java objects, see [below](#using-enigma-to-encrypt-base64).
+This java implementation is not optimized for performance.  It is, however, an accurate emulation of a physical Enigma machine and state.  The choice to base implementation on a class was so that it would be extensible to use other Java objects as contacts on each wheel, see [below](#using-enigma-to-encrypt-base64).
 
 ## Java Dependencies
 
