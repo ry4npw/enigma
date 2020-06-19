@@ -11,8 +11,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 /**
- * Implementation of the {@link Rotor} interface. Due to autoboxing, performance
- * of this implementation may be "poor".
+ * Implementation of the {@link Rotor} interface.
  * 
  * @author Ryan Powell
  * 

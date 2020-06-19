@@ -14,7 +14,7 @@ public class EnigmaUtils {
 	 * @param s
 	 * @return an array of {@code Character} objects
 	 */
-	public static Character[] toCharacterArray(String s) {
+	public static Character[] stringToCharacterArray(String s) {
 		if (s == null) {
 			return null;
 		}
@@ -26,5 +26,16 @@ public class EnigmaUtils {
 		}
 
 		return array;
+	}
+
+	/**
+	 * Converts a String into an array of {@code String} objects, where each object
+	 * in the array is a single letter.
+	 * 
+	 * @param s
+	 * @return an array of {@code String} letters from the input string
+	 */
+	public static String[] stringToStringArray(String s) {
+		return s.split("");
 	}
 }

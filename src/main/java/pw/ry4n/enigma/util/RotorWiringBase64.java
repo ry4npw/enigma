@@ -6,7 +6,7 @@ import pw.ry4n.enigma.Rotor;
 import pw.ry4n.enigma.RotorImpl;
 
 /**
- * A proof-of-concept wiring for a Base64
+ * A proof-of-concept rotor wiring for a Base64
  * <a>https://en.wikipedia.org/wiki/Base64</a> enigma machine.
  * 
  * @author Ryan Powell
@@ -20,27 +20,30 @@ public class RotorWiringBase64 {
 	}
 
 	// ALPHABET per https://en.wikipedia.org/wiki/Base64
-	public static final String[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-			.split("");
+	public static final String[] ALPHABET = EnigmaUtils
+			.stringToStringArray("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=");
 
 	public static Reflector<String> reflector() {
-		// reflector cannot be random, it must be wired in pairs
-		return new ReflectorImpl<>(ALPHABET,
-				"h0cUtk8+qKJfeQn3N=r5DpbimxgWC9MLaAXoF1YOjVIS/E7v6Z42BlzPyTwuGdHsR".split(""), ALPHABET);
+		// reflector must be wired in pairs
+		String[] outputs = EnigmaUtils
+				.stringToStringArray("h0cUtk8+qKJfeQn3N=r5DpbimxgWC9MLaAXoF1YOjVIS/E7v6Z42BlzPyTwuGdHsR");
+		return new ReflectorImpl<>(ALPHABET, outputs);
 	}
 
 	public static Rotor<String> rotorI() {
-		return new RotorImpl<>(ALPHABET, "bAPp7ZRnMge5=StoHL+iXITDxJYdjkB3QFh96N8syWuCKUOVEqvw40l/rmzfG1ac2".split(""),
-				ALPHABET, "0".split(""));
+		return rotor("bAPp7ZRnMge5=StoHL+iXITDxJYdjkB3QFh96N8syWuCKUOVEqvw40l/rmzfG1ac2", "0");
 	}
 
 	public static Rotor<String> rotorII() {
-		return new RotorImpl<>(ALPHABET, "MT160Jz4XLyqlvZInP7jCfu8QBG3s9p2oWrEtbak/ecFA=wgSUdKHRxYhOi5D+mVN".split(""),
-				ALPHABET, "8S".split(""));
+		return rotor("MT160Jz4XLyqlvZInP7jCfu8QBG3s9p2oWrEtbak/ecFA=wgSUdKHRxYhOi5D+mVN", "8S");
 	}
 
 	public static Rotor<String> rotorIII() {
-		return new RotorImpl<>(ALPHABET, "9Ccyh5ejI6gzBfXkUuYdpb4qOVlAFKGNnLmiDJ7T1vWQs3REx=SMt/a28wP0Hro+Z".split(""),
-				ALPHABET, "B+".split(""));
+		return rotor("9Ccyh5ejI6gzBfXkUuYdpb4qOVlAFKGNnLmiDJ7T1vWQs3REx=SMt/a28wP0Hro+Z", "B+");
+	}
+
+	private static Rotor<String> rotor(String outputs, String notchPositions) {
+		return new RotorImpl<>(ALPHABET, EnigmaUtils.stringToStringArray(outputs), ALPHABET,
+				EnigmaUtils.stringToStringArray(notchPositions));
 	}
 }

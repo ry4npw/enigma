@@ -1,21 +1,19 @@
 package pw.ry4n.enigma;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
+import pw.ry4n.enigma.util.EnigmaUtils;
 import pw.ry4n.enigma.util.RotorWiringBase64;
 
 public class EnigmaBase64Test {
 	@Test
 	public void testBase64ReflectorIsReflexive() {
-		Reflector<String> reflector = RotorWiringBase64.reflector();
-
-		for (String s : RotorWiringBase64.ALPHABET) {
-			assertThat(reflector.encode(reflector.encode(s))).isEqualTo(s);
-		}
+		// constructor will throw exception if not reflexive, failing test
+		RotorWiringBase64.reflector();
 	}
 
 	@Test
@@ -34,7 +32,7 @@ public class EnigmaBase64Test {
 		decryptingMachine.setReflector(RotorWiringBase64.reflector());
 
 		// "SGVsbG8sIFdvcmxkIQ==" is the Base64 representation of "Hello, World!"
-		String[] input = "SGVsbG8sIFdvcmxkIQ==".split("");
+		String[] input = EnigmaUtils.stringToStringArray("SGVsbG8sIFdvcmxkIQ==");
 
 		// encrypt with the first machine
 		String[] encrypted = encryptingMachine.encrypt(input);

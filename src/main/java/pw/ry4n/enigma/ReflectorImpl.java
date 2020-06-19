@@ -1,17 +1,23 @@
 package pw.ry4n.enigma;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.Validate;
 
 /**
- * Implementation of a reflector. Because of physical properties, a reflector is
- * wired in pairs, that is if "A" is wired to "D", then activating either
- * contact will activate the paired contact. In our implementation this means
- * "A" must encode to "D" and "D" must encode back to "A". This is enforced by
- * the {@link #assertWiringIsReflexive()} method called in the constructor.
+ * Implementation of a reflector. The reflector ensured that Enigma would be
+ * self-reciprocal; thus, with two identically configured machines, a message
+ * could be encrypted on one and decrypted on the other, without the need for a
+ * bulky mechanism to switch between encryption and decryption modes.
+ * 
+ * <p>
+ * Because of physical properties, a reflector is wired in pairs, that is if "A"
+ * is wired to "D", then activating either contact will activate the paired
+ * contact. In our implementation this means "A" must encode to "D" and "D" must
+ * encode back to "A". This is enforced by the
+ * {@link #assertWiringIsReflexive()} method called in the constructor.
+ * </p>
  * 
  * @author Ryan Powell
  *
@@ -19,30 +25,23 @@ import org.apache.commons.lang3.Validate;
  *            will most likely be {@link Character}'s.
  */
 public class ReflectorImpl<T> implements Reflector<T> {
-	protected HashMap<T, T> wiring;
-	protected List<T> positions;
-
-	/**
-	 * Offset is the rotation offset of the entire rotor assembly.
-	 */
-	protected int offset = 0;
+	protected Map<T, T> wiring;
 
 	/**
 	 * Parameterized constructor.
 	 * 
-	 * @param inputs    The array of input contacts on the reflector, in order
-	 * @param outputs   The array of output contacts on the reflector. These outputs
-	 *                  must be reflexive to the inputs. See {@link ReflectorImpl}.
-	 * @param positions the array of positions marked on the reflector
+	 * @param inputs  The array of input contacts on the reflector, in order
+	 * @param outputs The array of output contacts on the reflector. Because the
+	 *                reflector is wired in pairs, the outputs must be reflexive to
+	 *                the inputs. See {@link ReflectorImpl}.
+	 *
+	 * @throws IllegalArgumentException when the inputs and outputs are not
+	 *                                  reflexive.
 	 */
-	public ReflectorImpl(T[] inputs, T[] outputs, T[] positions) {
+	public ReflectorImpl(T[] inputs, T[] outputs) {
 		Validate.notEmpty(inputs);
 		Validate.notEmpty(outputs);
 		Validate.isTrue(inputs.length == outputs.length);
-		Validate.notEmpty(positions);
-		Validate.isTrue(inputs.length == positions.length);
-
-		this.positions = Arrays.asList(positions);
 
 		wiring = new HashMap<>(inputs.length);
 
@@ -67,13 +66,6 @@ public class ReflectorImpl<T> implements Reflector<T> {
 	@Override
 	public T encode(T value) {
 		T result = wiring.get(value);
-		// System.out.println(value + " reflected to " + result);
 		return result;
-	}
-
-	@Override
-	public Reflector<T> setPosition(T position) {
-		this.offset = positions.indexOf(position);
-		return this;
 	}
 }

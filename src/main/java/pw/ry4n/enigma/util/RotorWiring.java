@@ -19,49 +19,66 @@ public class RotorWiring {
 		// empty method
 	}
 
-	public static final Character[] ALPHABET = EnigmaUtils.toCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	public static final Character[] ALPHABET = EnigmaUtils.stringToCharacterArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-	public static Reflector<Character> reflectorWideB() {
-		return new ReflectorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("YRUHQSLDPXNGOKMIEBFZCWVJAT"), ALPHABET);
+	public static Reflector<Character> reflectorA() {
+		return reflector("EJMZALYXVBWFCRQUONTSPIKHGD");
+	}
+
+	public static Reflector<Character> reflectorB() {
+		return reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT");
+	}
+
+	public static Reflector<Character> reflectorC() {
+		return reflector("FVPJIAOYEDRZXWGCTKUQSBNMHL");
+	}
+
+	public static Reflector<Character> reflectorThinB() {
+		return reflector("ENKQAUYWJICOPBLMDXZVFTHRGS");
+	}
+
+	public static Reflector<Character> reflectorThinC() {
+		return reflector("RDOBJNTKVEHMLFCWZAXGYIPSUQ");
 	}
 
 	public static Rotor<Character> rotorI() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("EKMFLGDQVZNTOWYHXUSPAIBRCJ"), ALPHABET,
-				EnigmaUtils.toCharacterArray("Q"));
+		return rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q");
 	}
 
 	public static Rotor<Character> rotorII() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("AJDKSIRUXBLHWTMCQGZNPYFVOE"), ALPHABET,
-				EnigmaUtils.toCharacterArray("E"));
+		return rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E");
 	}
 
 	public static Rotor<Character> rotorIII() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("BDFHJLCPRTXVZNYEIWGAKMUSQO"), ALPHABET,
-				EnigmaUtils.toCharacterArray("V"));
+		return rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V");
 	}
 
 	public static Rotor<Character> rotorIV() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("ESOVPZJAYQUIRHXLNFTGKDCMWB"), ALPHABET,
-				EnigmaUtils.toCharacterArray("J"));
+		return rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "J");
 	}
 
 	public static Rotor<Character> rotorV() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("VZBRGITYUPSDNHLXAWMJQOFECK"), ALPHABET,
-				EnigmaUtils.toCharacterArray("Z"));
+		return rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "Z");
 	}
 
 	public static Rotor<Character> rotorVI() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("JPGVOUMFYQBENHZRDKASXLICTW"), ALPHABET,
-				EnigmaUtils.toCharacterArray("ZM"));
+		return rotor("JPGVOUMFYQBENHZRDKASXLICTW", "ZM");
 	}
 
 	public static Rotor<Character> rotorVII() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("NZJHGRCXMYSWBOUFAIVLPEKQDT"), ALPHABET,
-				EnigmaUtils.toCharacterArray("ZM"));
+		return rotor("NZJHGRCXMYSWBOUFAIVLPEKQDT", "ZM");
 	}
 
 	public static Rotor<Character> rotorVIII() {
-		return new RotorImpl<>(ALPHABET, EnigmaUtils.toCharacterArray("FKQHTLXOCBJSPDZRAMEWNIUYGV"), ALPHABET,
-				EnigmaUtils.toCharacterArray("ZM"));
+		return rotor("FKQHTLXOCBJSPDZRAMEWNIUYGV", "ZM");
+	}
+
+	private static Reflector<Character> reflector(String outputs) {
+		return new ReflectorImpl<>(ALPHABET, EnigmaUtils.stringToCharacterArray(outputs));
+	}
+
+	private static Rotor<Character> rotor(String outputs, String notchPositions) {
+		return new RotorImpl<>(ALPHABET, EnigmaUtils.stringToCharacterArray(outputs), ALPHABET,
+				EnigmaUtils.stringToCharacterArray(notchPositions));
 	}
 }

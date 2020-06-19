@@ -1,6 +1,12 @@
 package pw.ry4n.enigma;
 
-public interface Rotor<T> extends Reflector<T> {
+public interface Rotor<T> {
+	/**
+	 * @param value
+	 * @return the mapped/paired object.
+	 */
+	T encode(T value);
+
 	/**
 	 * @param value
 	 * @return the inverse mapping (left to right).
@@ -15,7 +21,12 @@ public interface Rotor<T> extends Reflector<T> {
 	 */
 	Rotor<T> setRingstellung(T ringstellung);
 
-	@Override
+	/**
+	 * Set the current position of the ring.
+	 * 
+	 * @param position
+	 * @return this {@link Reflector<T>} object for in-lining of this method
+	 */
 	Rotor<T> setPosition(T position);
 
 	/**
